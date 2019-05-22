@@ -1,0 +1,10 @@
+FROM alpine:3.9
+
+MAINTAINER Yanan Su <suyanan1991@163.com>
+
+RUN apk upgrade \
+    && apk add build-base gcc abuild binutils binutils-doc gcc-doc zlib-dev git cmake curl ca-certificates \
+    && cd /usr/local/ \
+    && wget https://github.com/fritzsedlazeck/Sniffles/archive/1.0.11.tar.gz -O Sniffles-1.0.11.tar.gz && tar xzvf Sniffles-1.0.11.tar.gz \
+    && cd Sniffles-1.0.11/ && mkdir -p build/ && cd build/ && cmake .. && make && cp ../bin/sniffles*/sniffles /bin/ \
+    && cd ../../ && rm -rf Sniffles-1.0.11.tar.gz && rm -rf /var/cache/apk/*

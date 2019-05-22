@@ -1,0 +1,10 @@
+FROM alpine:3.9
+
+MAINTAINER Yanan Su <suyanan1991@163.com>
+
+RUN apk upgrade \
+    && apk add build-base gcc g++ cmake make zlib-dev \
+    && cd /usr/local/ \
+    && wget https://github.com/philres/ngmlr/archive/v0.2.7.tar.gz -O ngmlr-0.27.tar.gz && tar zxvf ngmlr-0.27.tar.gz \
+    && cd ngmlr-0.2.7/ && mkdir -p build && cd build && cmake .. && make && cp ../bin/ngmlr-*/ngmlr /bin/ \
+    && cd ../../ && rm -rf ngmlr-0.27.tar.gz && rm -rf /var/cache/apk/*

@@ -1,0 +1,16 @@
+FROM alpine:3.9
+
+MAINTAINER Yanan Su <suyanan1991@163.com>
+
+RUN apk update \
+    && apk add build-base gcc abuild gcc-doc zlib-dev git cmake bash curl ca-certificates bzip2-dev xz-dev \
+    && apk add --no-cache python3 && cp /usr/bin/python3 /bin/python \
+    && apk add python3-dev && cp /usr/bin/pip3 /bin/pip \
+    && pip install pandas==0.24.2 openpyxl==2.6.2 \
+    && apk add perl \
+    && apk add R R-dev \
+    && R -q -e "install.packages(c('dplyr','ggplot2'), repos = 'https://mirrors.tuna.tsinghua.edu.cn/CRAN/')" \
+    && cd /usr/local \
+    && wget https://github.com/arq5x/bedtools2/releases/download/v2.28.0/bedtools-2.28.0.tar.gz && tar zxvf bedtools-2.28.0.tar.gz \
+    && cd bedtools2/ && make && cp bin/bedtools /bin/ \
+    && cd ../ && rm -rf bedtools-2.28.0.tar.gz && rm -rf /var/cache/apk/*
