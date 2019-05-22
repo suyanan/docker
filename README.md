@@ -39,4 +39,12 @@ from r-base , create some libraries.
 - sv_report
 
 ---
+
+Tricks:
+1. When installing some packages in docker container, you can check the related libs whether exits in [alpinelinux](https://pkgs.alpinelinux.org/packages).
+2. docekr build -t image_name .
+3. retry the software installation, by "docker run -it --name container_name image_name"
+4. check the container, by "docker cp", to debug the target project.
+
+---
 end
