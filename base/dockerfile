@@ -1,0 +1,8 @@
+FROM alpine:3.9
+
+MAINTAINER Yanan Su <suyanan1991@163.com>
+
+RUN apk upgrade \
+    && apk add build-base gcc g++ cmake make zlib-dev bzip2-dev xz-dev \
+    && apk add --no-cache python3 && cp /usr/bin/python3 /bin/python \
+    && apk add perl
