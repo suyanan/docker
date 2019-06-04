@@ -9,6 +9,9 @@ RUN apk upgrade \
 
 RUN cd /usr/local \
     && wget https://github.com/jts/nanopolish/archive/v0.11.0.tar.gz -O nanopolish-0.11.0.tar.gz && tar zxvf nanopolish-0.11.0.tar.gz \
-    && cd nanopolish-0.11.0/ 
-
-
+    && cd nanopolish-0.11.0/ \
+    && wget https://github.com/samtools/htslib/archive/1.9.tar.gz -O htslib.tar.gz && tar zxvf htslib.tar.gz && mv ./htslib-1.9/* ./htslib \
+    && wget https://github.com/mateidavid/fast5/archive/v0.6.5.tar.gz -O fast5.tar.gz && tar zxvf fast5.tar.gz && mv ./fast5-0.6.5/* ./fast5 \
+    && cp -r ./fast5/include/* ./src && cp -r ./htslib/htslib ./src/alignment/ \
+    && sed -i '16a\LDFLAGS = -L$(LIB_DIR) -lvcflib -lpthread -lz -lm -llzma -lbz2' Makefile && make && cp nanopolish /bin/ \
+    && cd ../ && rm -rf htslib-1.9.tar.gz fast5-0.6.5.tar.gz hdf5-*.tar.gz nanopolish-0.11.0.tar.gz
