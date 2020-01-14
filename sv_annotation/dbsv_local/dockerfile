@@ -1,0 +1,16 @@
+FROM alpine:3.9
+
+MAINTAINER Yanan Su <suyanan1991@163.com>
+
+RUN apk update \
+    && apk add build-base gcc abuild gcc-doc zlib-dev git cmake bash curl ca-certificates bzip2-dev xz-dev \
+    && apk add --no-cache python3 && cp /usr/bin/python3 /bin/python \
+    && apk add python3-dev && cp /usr/bin/pip3 /bin/pip
+RUN pip install configparser==4.0.2 elasticsearch==6.4.0 \
+    && rm -rf /var/cache/apk/*
+
+WORKDIR /dbsv-es-demos
+COPY es.py .
+COPY config.ini .
+RUN ln -s /dbsv-es-demos/es.py /bin/
+
